@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: smart
+
+hr:
+  raise:
+    default:
+      percent: '5'
+    smart:
+      lowpercent: '20'
+      highpercent: '10'
+      lowyear: '2.5'
+      middleyear: '5'
+      highyear: '10'
