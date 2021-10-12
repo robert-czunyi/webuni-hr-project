@@ -2,6 +2,7 @@ package hu.webuni.hr.geze.service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -37,18 +38,28 @@ public class SmartEmployeeService implements EmployeeService{
 	@Override
 	public int getPayRaisePercent(Employee employee) {
 		int percent;
-		LocalDateTime fromDateTime = employee.getYearInWork();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime fromDateTime = LocalDateTime.parse(employee.getYearInWork(), formatter);
 		LocalDateTime toDateTime = LocalDateTime.now();
 		Duration duration = Duration.between(fromDateTime, toDateTime);
+		int minuteInSeconds = 60;
+		int hourInMinutes = 60;
+		int dayInHours = 24;
+		double yearInDay = 365;
+		double durationInYear = duration.getSeconds() / (minuteInSeconds * hourInMinutes * dayInHours * yearInDay);
 		
-		if ((duration.getSeconds() / 31536000.0) < config.getRaise().getSmart().getLowYear()) {
+		if (durationInYear < config.getRaise().getSmart().getLowYear()) {
 			percent = 0;
-		}else if ((duration.getSeconds() / 31536000.0) < config.getRaise().getSmart().getMiddleYear()) {
+		}else if (durationInYear < config.getRaise().getSmart().getMiddleYear()) {
 			percent = config.getRaise().getSmart().getLowPercent();
-		}else if ((duration.getSeconds() / 31536000.0) < config.getRaise().getSmart().getHighYear()) {
+		}else if (durationInYear < config.getRaise().getSmart().getHighYear()) {
 			percent = config.getRaise().getDef().getPercent();
-		}else {
+		}else if (durationInYear < config.getRaise().getSmart().getHigherYear()) {
 			percent = config.getRaise().getSmart().getHighPercent();
+		}else if (durationInYear < config.getRaise().getSmart().getSuperYear()) {
+			percent = config.getRaise().getSmart().getHigherPercent();
+		}else {
+			percent = config.getRaise().getSmart().getPlusPercent();
 		}
 		return percent;
 	}

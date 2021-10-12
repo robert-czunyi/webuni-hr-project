@@ -1,6 +1,6 @@
-package hu.webuni.hr.geze.model;
+package hu.webuni.hr.geze.dto;
 
-public class Employee {
+public class EmployeeDto {
 
 	private long identifier;
 	private String name;
@@ -8,10 +8,10 @@ public class Employee {
 	private int salary;
 	private String yearInWork;
 	
-	public Employee() {
+	public EmployeeDto() {
 	}
 	
-	public Employee(long identifier, String name, String position, int salary, String yearInWork) {
+	public EmployeeDto(long identifier, String name, String position, int salary, String yearInWork) {
 		this.identifier = identifier;
 		this.name = name;
 		this.position = position;

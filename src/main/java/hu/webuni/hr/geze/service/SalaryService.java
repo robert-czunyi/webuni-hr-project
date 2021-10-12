@@ -14,6 +14,6 @@ public class SalaryService {
 	}
 	
 	public int getRaise(Employee employee) {
-		return employeeService.getPayRaisePercent(employee);
+		return (int)(employee.getSalary() * (employeeService.getPayRaisePercent(employee) / 100.0 + 1));
 	}
 }

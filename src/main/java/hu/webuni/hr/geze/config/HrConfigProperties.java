@@ -49,9 +49,14 @@ public class HrConfigProperties {
 	public static class Smart{
 		private int lowPercent;
 		private int highPercent;
+		private int higherPercent;
+		private int plusPercent;
 		private double lowYear;
 		private double middleYear;
 		private double highYear;
+		private double higherYear;
+		private double superYear;
+		
 		public int getLowPercent() {
 			return lowPercent;
 		}
@@ -63,6 +68,18 @@ public class HrConfigProperties {
 		}
 		public void setHighPercent(int highPercent) {
 			this.highPercent = highPercent;
+		}
+		public int getHigherPercent() {
+			return higherPercent;
+		}
+		public void setHigherPercent(int higherPercent) {
+			this.higherPercent = higherPercent;
+		}
+		public int getPlusPercent() {
+			return plusPercent;
+		}
+		public void setPlusPercent(int plusPercent) {
+			this.plusPercent = plusPercent;
 		}
 		public double getLowYear() {
 			return lowYear;
@@ -81,6 +98,18 @@ public class HrConfigProperties {
 		}
 		public void setHighYear(double highYear) {
 			this.highYear = highYear;
+		}
+		public double getHigherYear() {
+			return higherYear;
+		}
+		public void setHigherYear(double higherYear) {
+			this.higherYear = higherYear;
+		}
+		public double getSuperYear() {
+			return superYear;
+		}
+		public void setSuperYear(double superYear) {
+			this.superYear = superYear;
 		}
 	}
 }
