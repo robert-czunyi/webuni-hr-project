@@ -6,15 +6,26 @@
 </head>
 <body>
 <h1>List of Employees</h1>
-	<ul>
-		<li th:each="employee : ${employees}">
-			<span th:text="${employee.identifier}">id</span>
-			<span th:text="${employee.name}">name</span>
-			<span th:text="${employee.position}">position</span>
-			<span th:text="${employee.salary}">salary</span>
-			<span th:text="${employee.yearInWork}">yearInWork</span>
-		</li>
-	</ul>
+
+<table border>
+	<thead>
+	<tr>
+		<th>Id
+		<th>Name
+		<th>Position
+		<th>Salary
+		<th>Entry date
+	<tbody>
+		<tr th:each="employee : ${employees}">
+			<td th:text="${employee.identifier}">Id
+			<td><a th:href="@{'/update?id='+${employee.identifier}}" th:text="${employee.name}"></a>
+			<td th:text="${employee.position}">Position
+			<td th:text="${employee.salary}">Salary
+			<td th:text="${employee.yearInWork}">EntryDate
+			<td><a th:href="@{'/deleteEmployee?mid='+${employee.identifier}}">DELETE</a>
+	</table>
+	<br><br>
+
 	<form th:action="@{/listEmployee}" method="post" th:object="${newEmployee}">
 		Identifier: <input th:field="*{identifier}" /><br/>
 		Name: <input th:field="*{name}" /><br/>

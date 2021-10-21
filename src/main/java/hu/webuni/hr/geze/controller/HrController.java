@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,15 +14,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import hu.webuni.hr.geze.dto.EmployeeDto;
+import hu.webuni.hr.geze.model.Employee;
+import hu.webuni.hr.geze.service.EmployeeService;
 
 @RestController
 @RequestMapping("/api/employees")
 public class HrController {
 
 	private Map<Long, EmployeeDto> employees = new HashMap<>();
+	
+	@Autowired
+	private EmployeeService employeeService;
 	
 	{
 		employees.put(1L,  new EmployeeDto(1, "Feri", "futár", 180000, "2014.10.15. 12:15:51"));
@@ -49,7 +56,7 @@ public class HrController {
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<EmployeeDto> modifyAirport(@PathVariable long id, @RequestBody EmployeeDto employeeDto) {
+	public ResponseEntity<EmployeeDto> modifyEmployee(@PathVariable long id, @RequestBody EmployeeDto employeeDto) {
 		if(!employees.containsKey(id)) {
 			return ResponseEntity.notFound().build();
 		}
@@ -63,14 +70,19 @@ public class HrController {
 		employees.remove(id);
 	}
 	
-	@GetMapping("/query/{query}")
-	public List<EmployeeDto> getSalaryMoreThan(@PathVariable int query) {
+	@GetMapping(params = "minSalary")
+	public List<EmployeeDto> getSalaryMoreThan(@RequestParam int minSalary) {
 		List<EmployeeDto> employs = new ArrayList<>();
 		for(EmployeeDto employeeDto : employees.values()) {
-			if (employeeDto.getSalary() > query) {
+			if (employeeDto.getSalary() > minSalary) {
 				employs.add(employeeDto);
 			}
 		}
 		return employs;
 		}
+	
+	@PostMapping("/payRaise")
+	public int getPayRaise(@RequestBody Employee employee) {
+		return employeeService.getPayRaisePercent(employee); 
+	}
 }
