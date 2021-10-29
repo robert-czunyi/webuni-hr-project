@@ -3,14 +3,14 @@ package hu.webuni.hr.geze.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import hu.webuni.hr.geze.config.HrConfigProperties;
+import hu.webuni.hr.geze.config.EmployeeConfigProperties;
 import hu.webuni.hr.geze.model.Employee;
 
 @Service
-public class DefaultEmployeeService implements EmployeeService{
+public class DefaultEmployeeService implements EmployeeServiceInterface{
 
 	@Autowired
-	HrConfigProperties config;
+	EmployeeConfigProperties config;
 	
 	@Override
 	public int getPayRaisePercent(Employee employee) {

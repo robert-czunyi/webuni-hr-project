@@ -2,20 +2,18 @@ package hu.webuni.hr.geze.service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import hu.webuni.hr.geze.config.HrConfigProperties;
+import hu.webuni.hr.geze.config.EmployeeConfigProperties;
 import hu.webuni.hr.geze.model.Employee;
 
 @Service
-public class SmartEmployeeService implements EmployeeService{
+public class SmartEmployeeService implements EmployeeServiceInterface{
 
 	@Autowired
-	HrConfigProperties config;
+	EmployeeConfigProperties config;
 	
 //	@Value("${hr.raise.smart.lowpercent}")
 //	private int lowPercent;
@@ -38,8 +36,7 @@ public class SmartEmployeeService implements EmployeeService{
 	@Override
 	public int getPayRaisePercent(Employee employee) {
 		int percent;
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		LocalDateTime fromDateTime = LocalDateTime.parse(employee.getYearInWork(), formatter);
+		LocalDateTime fromDateTime = employee.getYearInWork();
 		LocalDateTime toDateTime = LocalDateTime.now();
 		Duration duration = Duration.between(fromDateTime, toDateTime);
 		int minuteInSeconds = 60;

@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 @ConfigurationProperties(prefix = "hr")
 @Component
-public class HrConfigProperties {
+public class EmployeeConfigProperties {
 	
 	private Raise raise = new Raise();
 

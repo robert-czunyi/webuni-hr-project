@@ -1,17 +1,31 @@
 package hu.webuni.hr.geze.model;
 
+import java.time.LocalDateTime;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Past;
+
 public class Employee {
 
 	private long identifier;
+
+	@NotEmpty
 	private String name;
+
+	@NotEmpty
 	private String position;
+
+	@Min(1)
 	private int salary;
-	private String yearInWork;
-	
+
+	@Past
+	private LocalDateTime yearInWork;
+
 	public Employee() {
 	}
-	
-	public Employee(long identifier, String name, String position, int salary, String yearInWork) {
+
+	public Employee(long identifier, String name, String position, int salary, LocalDateTime yearInWork) {
 		this.identifier = identifier;
 		this.name = name;
 		this.position = position;
@@ -26,7 +40,7 @@ public class Employee {
 	public void setIdentifier(long identifier) {
 		this.identifier = identifier;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
@@ -34,7 +48,7 @@ public class Employee {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getPosition() {
 		return position;
 	}
@@ -51,11 +65,11 @@ public class Employee {
 		this.salary = salary;
 	}
 
-	public String getYearInWork() {
+	public LocalDateTime getYearInWork() {
 		return yearInWork;
 	}
 
-	public void setYearInWork(String yearInWork) {
+	public void setYearInWork(LocalDateTime yearInWork) {
 		this.yearInWork = yearInWork;
 	}
 }

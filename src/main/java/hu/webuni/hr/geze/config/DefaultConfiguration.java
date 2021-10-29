@@ -5,14 +5,14 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import hu.webuni.hr.geze.service.DefaultEmployeeService;
-import hu.webuni.hr.geze.service.EmployeeService;
+import hu.webuni.hr.geze.service.EmployeeServiceInterface;
 
 @Configuration
 @Profile("!smart")
 public class DefaultConfiguration {
 
 	@Bean
-	public EmployeeService employeeService() {
+	public EmployeeServiceInterface employeeService() {
 		return new DefaultEmployeeService();
 	}
 }

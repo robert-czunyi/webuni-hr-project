@@ -1,5 +1,6 @@
 package hu.webuni.hr.geze.controller;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,13 +13,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import hu.webuni.hr.geze.model.Employee;
 
 @Controller
-public class HrTLController {
+public class EmployeeTLController {
 
 	private List<Employee> allEmployee = new ArrayList<>();
 
 	{
-		allEmployee.add(new Employee(1, "Teri", "futár", 180000, "2014.10.15. 12:15:51"));
-		allEmployee.add(new Employee(2, "Gizi", "takarító", 220000, "2017.08.16. 09:51:00"));
+		allEmployee.add(new Employee(1, "Teri", "futár", 180000, LocalDateTime.of(2014, 10, 15, 12, 15, 51)));
+		allEmployee.add(new Employee(2, "Gizi", "takarító", 220000, LocalDateTime.of(2017, 8, 16, 9, 51, 0)));
 	}
 
 	@GetMapping("/")
