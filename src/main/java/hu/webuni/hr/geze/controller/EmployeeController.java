@@ -1,6 +1,7 @@
 package hu.webuni.hr.geze.controller;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -14,20 +15,21 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import hu.webuni.hr.geze.dto.EmployeeDto;
 import hu.webuni.hr.geze.mapper.EmployeeMapper;
 import hu.webuni.hr.geze.model.Employee;
-import hu.webuni.hr.geze.service.EmployeeServiceAbstract;
+import hu.webuni.hr.geze.service.EmployeeService;
 
 @RestController
 @RequestMapping("/api/employees")
-public class EmployeeController extends EmployeeServiceAbstract{
+public class EmployeeController{
 	
 	@Autowired
-	EmployeeServiceAbstract empServAb;
+	EmployeeService empServAb;
 	
 	@Autowired
 	EmployeeMapper employeeMapper;
@@ -39,11 +41,9 @@ public class EmployeeController extends EmployeeServiceAbstract{
 
 	@GetMapping("/{id}")
 	public EmployeeDto getById(@PathVariable long id) {
-		Employee employee = empServAb.findById(id);
-		if (employee != null)
-			return employeeMapper.employeeToDto(employee);
-		else
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		Employee employee = empServAb.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		return employeeMapper.employeeToDto(employee);
 	}
 
 	@PostMapping
@@ -62,9 +62,26 @@ public class EmployeeController extends EmployeeServiceAbstract{
 	}
 
 	@DeleteMapping("/{id}")
-	public List<Employee> deleteEmployee(@PathVariable long id) {
-		employeeMapper.employeesToDtos(empServAb.delete(id));
-		return new ArrayList<>(empServAb.findAll());
+	public void deleteEmployee(@PathVariable long id) {
+		empServAb.delete(id);
+	}
+	
+	@GetMapping(params = "position")
+	public List<Employee> getByPosition(@RequestParam String position) {
+		return empServAb.findByPosition(position);
+	}
+	
+	@GetMapping(params = "name")
+	public List<Employee> getByNameDetail (@RequestParam String name){
+		return empServAb.findByNameDetail(name);
+	}
+	
+	@GetMapping(params = "start, end")
+	public List<Employee> getByYearInWorkBetween(@RequestParam String start, @RequestParam String end){
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime startDate = LocalDateTime.parse(start, formatter);
+		LocalDateTime endDate = LocalDateTime.parse(end, formatter);
+		return empServAb.findByDatesBetween(startDate, endDate);
 	}
 
 //	@GetMapping(params = "minSalary")

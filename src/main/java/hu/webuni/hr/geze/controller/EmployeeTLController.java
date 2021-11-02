@@ -17,10 +17,10 @@ public class EmployeeTLController {
 
 	private List<Employee> allEmployee = new ArrayList<>();
 
-	{
-		allEmployee.add(new Employee(1, "Teri", "futár", 180000, LocalDateTime.of(2014, 10, 15, 12, 15, 51)));
-		allEmployee.add(new Employee(2, "Gizi", "takarító", 220000, LocalDateTime.of(2017, 8, 16, 9, 51, 0)));
-	}
+//	{
+//		allEmployee.add(new Employee(1, "Teri", "futár", 180000, LocalDateTime.of(2014, 10, 15, 12, 15, 51)));
+//		allEmployee.add(new Employee(2, "Gizi", "takarító", 220000, LocalDateTime.of(2017, 8, 16, 9, 51, 0)));
+//	}
 
 	@GetMapping("/")
 	public String home() {

@@ -1,6 +1,5 @@
 package hu.webuni.hr.geze.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,11 +53,9 @@ public class CompanyController {
 
 	@GetMapping("/{id}")
 	public CompanyDto getById(@PathVariable long id, @RequestParam(required = false) Boolean full) {
-		Company company = comServ.findById(id);
-		if (company != null)
-			return companyMapper.companyToDto(company);
-		else
-			throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+		Company company = comServ.findById(id)
+				.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+		return companyMapper.companyToDto(company);
 	}
 
 	@PostMapping
@@ -77,9 +74,8 @@ public class CompanyController {
 	}
 
 	@DeleteMapping("/{id}")
-	public List<Company> deleteCompany(@PathVariable long id) {
-		companyMapper.companiesToDtos(comServ.delete(id));
-		return new ArrayList<>(comServ.findAll());
+	public void deleteCompany(@PathVariable long id) {
+		comServ.delete(id);
 	}
 
 //	@PostMapping("/{companyId}/employees")

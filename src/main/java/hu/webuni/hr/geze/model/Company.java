@@ -1,28 +1,33 @@
 package hu.webuni.hr.geze.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-import hu.webuni.hr.geze.dto.EmployeeDto;
-
+@Entity
 public class Company {
 
+	@Id
+	@GeneratedValue
 	private long id;
 	private String name;
 	private String address;
 	private int registerNumber;
-	List<EmployeeDto> employees = new ArrayList<>();
+
+	@ManyToOne
+	private Employee employ;
 
 	public Company() {
 	}
 
-	public Company(long id, String name, String address, int registerNumber, List<EmployeeDto> employees) {
+	public Company(long id, String name, String address, int registerNumber, Employee employ) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.address = address;
 		this.registerNumber = registerNumber;
-		this.employees = employees;
+		this.employ = employ;
 	}
 
 	public long getId() {
@@ -57,13 +62,11 @@ public class Company {
 		this.registerNumber = registerNumber;
 	}
 
-	public List<EmployeeDto> getEmployees() {
-		return employees;
+	public Employee getEmploy() {
+		return employ;
 	}
 
-	public void setEmployees(List<EmployeeDto> employees) {
-		this.employees = employees;
+	public void setEmploy(Employee employ) {
+		this.employ = employ;
 	}
-
-	
 }

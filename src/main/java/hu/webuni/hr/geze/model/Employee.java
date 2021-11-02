@@ -2,12 +2,19 @@ package hu.webuni.hr.geze.model;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Past;
 
+@Entity
 public class Employee {
 
+	@Id
+	@GeneratedValue
 	private long identifier;
 
 	@NotEmpty
@@ -21,16 +28,20 @@ public class Employee {
 
 	@Past
 	private LocalDateTime yearInWork;
+	
+	@ManyToOne
+	private Company workPlace;
 
 	public Employee() {
 	}
 
-	public Employee(long identifier, String name, String position, int salary, LocalDateTime yearInWork) {
+	public Employee(long identifier, String name, String position, int salary, LocalDateTime yearInWork, Company workPlace) {
 		this.identifier = identifier;
 		this.name = name;
 		this.position = position;
 		this.salary = salary;
 		this.yearInWork = yearInWork;
+		this.workPlace = workPlace;
 	}
 
 	public Long getIdentifier() {
@@ -71,5 +82,13 @@ public class Employee {
 
 	public void setYearInWork(LocalDateTime yearInWork) {
 		this.yearInWork = yearInWork;
+	}
+	
+	public Company getWorkPlace() {
+		return workPlace;
+	}
+
+	public void setWorkPlace(Company workPlace) {
+		this.workPlace = workPlace;
 	}
 }
