@@ -23,6 +23,8 @@ public class EmployeeDto {
 	@Past
 	private LocalDateTime yearInWork;
 	
+	private CompanyDto company;
+	
 	public EmployeeDto() {
 	}
 	
@@ -72,5 +74,13 @@ public class EmployeeDto {
 
 	public void setYearInWork(LocalDateTime yearInWork) {
 		this.yearInWork = yearInWork;
+	}
+	
+	public CompanyDto getCompany() {
+		return company;
+	}
+
+	public void setCompany(CompanyDto company) {
+		this.company = company;
 	}
 }

@@ -2,6 +2,7 @@ package hu.webuni.hr.geze.service;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,11 +11,11 @@ import hu.webuni.hr.geze.config.EmployeeConfigProperties;
 import hu.webuni.hr.geze.model.Employee;
 
 @Service
-public class SmartEmployeeService implements EmployeeServiceInterface{
+public class SmartEmployeeService extends AbstractEmployeeService {
 
 	@Autowired
 	EmployeeConfigProperties config;
-	
+
 //	@Value("${hr.raise.smart.lowpercent}")
 //	private int lowPercent;
 //	
@@ -32,7 +33,7 @@ public class SmartEmployeeService implements EmployeeServiceInterface{
 //	
 //	@Value("${hr.raise.smart.highyear}")
 //	private int highYear;
-	
+
 	@Override
 	public int getPayRaisePercent(Employee employee) {
 		int percent;
@@ -44,21 +45,38 @@ public class SmartEmployeeService implements EmployeeServiceInterface{
 		int dayInHours = 24;
 		double yearInDay = 365;
 		double durationInYear = duration.getSeconds() / (minuteInSeconds * hourInMinutes * dayInHours * yearInDay);
-		
+
 		if (durationInYear < config.getRaise().getSmart().getLowYear()) {
 			percent = 0;
-		}else if (durationInYear < config.getRaise().getSmart().getMiddleYear()) {
+		} else if (durationInYear < config.getRaise().getSmart().getMiddleYear()) {
 			percent = config.getRaise().getSmart().getLowPercent();
-		}else if (durationInYear < config.getRaise().getSmart().getHighYear()) {
+		} else if (durationInYear < config.getRaise().getSmart().getHighYear()) {
 			percent = config.getRaise().getDef().getPercent();
-		}else if (durationInYear < config.getRaise().getSmart().getHigherYear()) {
+		} else if (durationInYear < config.getRaise().getSmart().getHigherYear()) {
 			percent = config.getRaise().getSmart().getHighPercent();
-		}else if (durationInYear < config.getRaise().getSmart().getSuperYear()) {
+		} else if (durationInYear < config.getRaise().getSmart().getSuperYear()) {
 			percent = config.getRaise().getSmart().getHigherPercent();
-		}else {
+		} else {
 			percent = config.getRaise().getSmart().getPlusPercent();
 		}
 		return percent;
 	}
 
-}
+	@Override
+	public List<Employee> findByDatesBetween(LocalDateTime start, LocalDateTime end) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Employee> findByNameDetail(String name) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Employee> findByPosition(String position) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	}

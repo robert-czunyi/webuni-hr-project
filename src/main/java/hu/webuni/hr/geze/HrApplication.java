@@ -8,6 +8,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import hu.webuni.hr.geze.model.Employee;
+import hu.webuni.hr.geze.service.InitDbService;
 import hu.webuni.hr.geze.service.SalaryService;
 
 @SpringBootApplication
@@ -15,6 +16,9 @@ public class HrApplication implements CommandLineRunner{
 
 	@Autowired
 	SalaryService salaryService;
+	
+	@Autowired
+	InitDbService initDbService;
 	
 	public static void main(String[] args) {
 		SpringApplication.run(HrApplication.class, args);
@@ -29,5 +33,8 @@ public class HrApplication implements CommandLineRunner{
 //		System.out.println(salaryService.getRaise(geza));
 //		Employee pista = new Employee(11, "István", "raktáros", 240000, LocalDateTime.of(1980, 12, 25, 14, 10, 0));
 //		System.out.println(salaryService.getRaise(pista));
+	
+		//initDbService.clearDB();
+		initDbService.insertTestData();
 	}
 }

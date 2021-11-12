@@ -2,60 +2,27 @@ package hu.webuni.hr.geze.service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import javax.transaction.Transactional;
-
-import org.springframework.stereotype.Service;
-
 import hu.webuni.hr.geze.model.Employee;
-import hu.webuni.hr.geze.repository.EmployeeRepository;
 
-@Service
-public class EmployeeService {
+public interface EmployeeService {
 
-	EmployeeRepository employeeRepository;
+	public int getPayRaisePercent(Employee employee);
 
-	public EmployeeService(EmployeeRepository employeeRepository) {
-		this.employeeRepository = employeeRepository;
-	}
+	public Employee save(Employee employee);
 
-	public List<Employee> findAll() {
-		return employeeRepository.findAll();
-	}
+	public Employee update(Employee employee);
 
-	public Optional<Employee> findById(long id) {
-		return employeeRepository.findById(id);
-	}
+	public List<Employee> findAll();
 
-	@Transactional
-	public Employee save(Employee employee) {
-		return employeeRepository.save(employee);
-	}
+	public Optional<Employee> findById(long id);
 
-	@Transactional
-	public void delete(long id) {
-		employeeRepository.deleteById(id);
-	}
+	public void delete(long id);
 
-	@Transactional
-	public Employee modify(long id, Employee employee) {
-		if (employeeRepository.existsById(id))
-			return employeeRepository.save(employee);
-		else
-			throw new NoSuchElementException();
-	}
+	public List<Employee> findByDatesBetween(LocalDateTime start, LocalDateTime end);
 
-	public List<Employee> findByPosition(String position) {
-		return employeeRepository.findByPosition(position);
-	}
+	public List<Employee> findByNameDetail(String name);
 
-	public List<Employee> findByNameDetail(String nameDetail) {
-		return employeeRepository.findByNameStartingWithIgnoreCase(nameDetail);
-	}
-
-	public List<Employee> findByDatesBetween(LocalDateTime start, LocalDateTime end) {
-		return employeeRepository.findByYearInWorkBetween(start, end);
-	}
+	public List<Employee> findByPosition(String position);
 }

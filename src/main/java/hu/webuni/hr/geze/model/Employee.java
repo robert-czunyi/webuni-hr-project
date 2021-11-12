@@ -6,49 +6,44 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.Past;
 
 @Entity
 public class Employee {
 
 	@Id
 	@GeneratedValue
-	private long identifier;
-
-	@NotEmpty
+	private Long identifier;
 	private String name;
-
-	@NotEmpty
-	private String position;
-
-	@Min(1)
+	//private String position;
 	private int salary;
-
-	@Past
 	private LocalDateTime yearInWork;
 	
 	@ManyToOne
-	private Company workPlace;
+	private Position position;
+
+	@ManyToOne
+	private Company company;
 
 	public Employee() {
 	}
 
-	public Employee(long identifier, String name, String position, int salary, LocalDateTime yearInWork, Company workPlace) {
+	public Employee(Long identifier, String name, int salary, LocalDateTime yearInWork) {
 		this.identifier = identifier;
 		this.name = name;
-		this.position = position;
 		this.salary = salary;
 		this.yearInWork = yearInWork;
-		this.workPlace = workPlace;
+	}
+	
+	public Employee(int salary, LocalDateTime yearInWork) {
+		this.salary = salary;
+		this.yearInWork = yearInWork;
 	}
 
 	public Long getIdentifier() {
 		return identifier;
 	}
 
-	public void setIdentifier(long identifier) {
+	public void setIdentifier(Long identifier) {
 		this.identifier = identifier;
 	}
 
@@ -58,14 +53,6 @@ public class Employee {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getPosition() {
-		return position;
-	}
-
-	public void setPosition(String position) {
-		this.position = position;
 	}
 
 	public int getSalary() {
@@ -83,12 +70,20 @@ public class Employee {
 	public void setYearInWork(LocalDateTime yearInWork) {
 		this.yearInWork = yearInWork;
 	}
-	
-	public Company getWorkPlace() {
-		return workPlace;
+
+	public Company getCompany() {
+		return company;
 	}
 
-	public void setWorkPlace(Company workPlace) {
-		this.workPlace = workPlace;
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+	
+	public Position getPosition() {
+		return position;
+	}
+
+	public void setPosition(Position position) {
+		this.position = position;
 	}
 }
